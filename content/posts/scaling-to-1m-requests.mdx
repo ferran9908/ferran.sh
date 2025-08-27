@@ -1,0 +1,132 @@
+---
+title: "How We Scaled to 1M Requests/sec"
+date: "2024-03-15"
+description: "The exact steps we took to handle massive scale at our startup, from database optimization to caching strategies and infrastructure improvements."
+tags: ["architecture", "scaling", "performance", "aws"]
+featured: true
+---
+
+Scaling a system from handling thousands to millions of requests per second is one of the most challenging yet rewarding experiences in software engineering. When we started this journey, our system was struggling at 10,000 requests per second. Today, we comfortably handle over 1 million requests per second with sub-100ms p99 latency.
+
+## The Starting Point
+
+Our initial architecture was fairly standard for a startup:
+- Monolithic Node.js application
+- Single PostgreSQL database
+- Basic Redis cache
+- Deployed on AWS EC2 instances behind an ALB
+
+This worked fine for our first 10,000 users, but as we grew, the cracks started to show.
+
+## Step 1: Database Optimization
+
+The database was our first bottleneck. Here's what we did:
+
+### Read Replicas
+We implemented read replicas to distribute the read load. This immediately gave us a 3x improvement in throughput.
+
+```sql
+-- Before: All queries hit the primary
+SELECT * FROM users WHERE id = $1;
+
+-- After: Read queries hit replicas
+SELECT * FROM users WHERE id = $1; -- Via read connection pool
+```
+
+### Connection Pooling
+We optimized our connection pooling with PgBouncer, reducing connection overhead by 60%.
+
+### Query Optimization
+We analyzed slow queries and added appropriate indexes:
+
+```sql
+-- Added composite indexes for common query patterns
+CREATE INDEX idx_users_status_created 
+ON users(status, created_at) 
+WHERE deleted_at IS NULL;
+```
+
+## Step 2: Caching Strategy
+
+We implemented a multi-layer caching strategy:
+
+### Application-Level Cache
+Using Redis for hot data with smart TTLs:
+
+```javascript
+async function getUser(id) {
+  const cached = await redis.get(`user:${id}`);
+  if (cached) return JSON.parse(cached);
+  
+  const user = await db.query('SELECT * FROM users WHERE id = $1', [id]);
+  await redis.setex(`user:${id}`, 300, JSON.stringify(user));
+  return user;
+}
+```
+
+### CDN for Static Assets
+We moved all static assets to CloudFront, reducing origin server load by 80%.
+
+## Step 3: Microservices Migration
+
+We broke down our monolith into focused microservices:
+- User Service
+- Payment Service
+- Notification Service
+- Analytics Service
+
+Each service could now scale independently based on its specific load patterns.
+
+## Step 4: Infrastructure Improvements
+
+### Auto-scaling
+We implemented aggressive auto-scaling policies:
+
+```yaml
+# Kubernetes HPA configuration
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: api-hpa
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: api
+  minReplicas: 10
+  maxReplicas: 100
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: 50
+```
+
+### Load Balancing
+We switched from ALB to a combination of CloudFront and ALB for better global distribution.
+
+## Results
+
+After implementing these changes over 6 months:
+- **Throughput**: 10,000 → 1,000,000+ requests/sec
+- **P99 Latency**: 500ms → 95ms
+- **Error Rate**: 0.5% → 0.01%
+- **Infrastructure Cost**: Reduced by 40% through better resource utilization
+
+## Key Learnings
+
+1. **Measure Everything**: You can't optimize what you don't measure
+2. **Cache Aggressively**: But invalidate intelligently
+3. **Scale Horizontally**: It's easier than vertical scaling
+4. **Optimize Incrementally**: Big bang migrations rarely work
+
+## What's Next?
+
+We're now exploring:
+- Edge computing for even lower latency
+- GraphQL federation for better API efficiency
+- Switching to a more performant language (Rust) for critical paths
+
+Scaling is a journey, not a destination. Every order of magnitude brings new challenges and opportunities to learn.
