@@ -5,32 +5,34 @@ import { SearchBar } from '@/components/blog/SearchBar';
 import { getAllPosts, getAllTags } from '@/lib/blog';
 
 export const metadata: Metadata = {
-  title: 'Writing',
-  description: 'Technical articles about architecture, scaling, and engineering leadership.',
+  title: 'writing',
+  description: 'thoughts on building software, ai research, and fun side projects.',
 };
 
 interface WritingPageProps {
-  searchParams: {
+  searchParams: Promise<{
     tag?: string;
     search?: string;
-  };
+  }>;
 }
 
 export default async function WritingPage({ searchParams }: WritingPageProps) {
   const allPosts = await getAllPosts();
   const allTags = getAllTags(allPosts);
+
+  const resolvedSearchParams = await searchParams;
   
   // Filter posts based on search params
   let filteredPosts = allPosts;
   
-  if (searchParams.tag) {
+  if (resolvedSearchParams.tag) {
     filteredPosts = filteredPosts.filter(post =>
-      post.tags.map(t => t.toLowerCase()).includes(searchParams.tag!.toLowerCase())
+      post.tags.map(t => t.toLowerCase()).includes(resolvedSearchParams.tag!.toLowerCase())
     );
   }
   
-  if (searchParams.search) {
-    const searchTerm = searchParams.search.toLowerCase();
+  if (resolvedSearchParams.search) {
+    const searchTerm = resolvedSearchParams.search.toLowerCase();
     filteredPosts = filteredPosts.filter(post =>
       post.title.toLowerCase().includes(searchTerm) ||
       post.description.toLowerCase().includes(searchTerm) ||
@@ -41,23 +43,23 @@ export default async function WritingPage({ searchParams }: WritingPageProps) {
   return (
     <div className="space-y-8">
       <div className="space-y-4">
-        <h1 className="text-4xl font-bold">Writing</h1>
+        <h1 className="text-4xl font-bold">writing</h1>
         <p className="text-lg text-muted-foreground">
-          Thoughts on software architecture, scaling systems, and leading engineering teams.
+          thoughts on building software, ai research, and fun side projects.
         </p>
       </div>
 
       <div className="space-y-4">
         <SearchBar />
         {allTags.length > 0 && (
-          <TagFilter tags={allTags} selectedTag={searchParams.tag} />
+          <TagFilter tags={allTags} selectedTag={resolvedSearchParams.tag} />
         )}
       </div>
 
       {filteredPosts.length === 0 ? (
         <div className="text-center py-12">
           <p className="text-muted-foreground">
-            No posts found. Try adjusting your filters or check back later for new content.
+            no posts found. try adjusting your filters or check back later for new content.
           </p>
         </div>
       ) : (

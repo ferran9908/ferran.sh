@@ -15,9 +15,9 @@ import { cn } from '@/lib/utils';
 import { useState, useEffect } from 'react';
 
 const navigation = [
-  { name: 'Writing', href: '/writing' },
-  { name: 'About', href: '/about' },
-  { name: 'Now', href: '/now' },
+  { name: 'writing', href: '/writing' },
+  { name: 'about', href: '/about' },
+  { name: 'now', href: '/now' },
 ];
 
 export function Header() {
@@ -34,7 +34,7 @@ export function Header() {
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <nav className="mx-auto flex max-w-3xl items-center justify-between px-6 py-4">
         <div className="flex items-center gap-6">
-          <Link href="/" className="font-semibold text-lg hover:text-primary transition-colors">
+          <Link href="/" className="font-semibold underline text-lg hover:text-primary transition-colors">
             ferran.sh
           </Link>
           

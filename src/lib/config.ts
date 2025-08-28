@@ -1,15 +1,15 @@
 export const siteConfig = {
-  name: "Ferran",
-  title: "Ferran - Founding Engineer",
+  name: "ferran",
+  title: "ferran - founding engineer",
   description:
-    "Founding Engineer at Triad Labs, Inc. Writing about architecture, scaling, and engineering leadership.",
+    "founding engineer at triad labs, inc. writing about building things that don't scale.",
   url: "https://ferran.sh",
   ogImage: "https://ferran.sh/og.jpg",
   author: {
-    name: "Ferran",
-    role: "Founding Engineer",
-    company: "Triad Labs, Inc.",
-    bio: "Building scalable systems and leading engineering teams. Passionate about architecture, performance, and developer experience.",
+    name: "ferran",
+    role: "founding engineer",
+    company: "triad labs, inc.",
+    bio: "build things that don't scale. iterate. repeat.",
     twitter: "https://twitter.com/ferran9908`",
     github: "https://github.com/ferran9908",
     linkedin: "https://linkedin.com/in/ferran-sulaiman",

@@ -16,7 +16,7 @@ export default async function HomePage() {
         <div className="space-y-6">
           <div className="space-y-4">
             <h1 className="text-4xl md:text-6xl font-bold tracking-tight">
-              I&apos;m {siteConfig.author.name}, {siteConfig.author.role} at {siteConfig.author.company}
+              {siteConfig.author.name}, <span className="font-mono text-md ">{siteConfig.author.role}</span> at {siteConfig.author.company}
             </h1>
             <p className="text-xl text-muted-foreground max-w-2xl">
               {siteConfig.author.bio}
@@ -26,12 +26,12 @@ export default async function HomePage() {
           <div className="flex flex-wrap gap-4">
             <Button asChild size="lg">
               <Link href="/writing">
-                Read my writing
+                read my writing
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Link>
             </Button>
             <Button asChild variant="outline" size="lg">
-              <Link href="/about">Learn more about me</Link>
+              <Link href="/about">learn more about me</Link>
             </Button>
           </div>
           
@@ -71,10 +71,10 @@ export default async function HomePage() {
       {recentPosts.length > 0 && (
         <section>
           <div className="flex items-center justify-between mb-8">
-            <h2 className="text-3xl font-bold">Recent Writing</h2>
+            <h2 className="text-3xl font-bold">recent writing</h2>
             <Button asChild variant="ghost">
               <Link href="/writing">
-                View all posts
+                view all posts
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Link>
             </Button>
@@ -89,9 +89,9 @@ export default async function HomePage() {
       )}
 
       {/* Newsletter Section */}
-      <section>
+      {/* <section>
         <NewsletterForm />
-      </section>
+      </section> */}
     </div>
   );
 }
