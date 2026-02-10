@@ -98,7 +98,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${inter.variable} ${jetbrainsMono.variable} ${pressStart2P.variable} font-sans antialiased min-h-screen flex flex-col arcade-body`}
+        className={`${inter.variable} ${jetbrainsMono.variable} ${pressStart2P.variable} font-sans antialiased min-h-screen flex flex-col`}
       >
         <ThemeProvider
           attribute="class"

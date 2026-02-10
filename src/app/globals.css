@@ -112,44 +112,11 @@
   --sidebar-ring: oklch(0.8 0.2 200);
 }
 
-.arcade-body {
-  background: radial-gradient(circle at 20% 10%, rgba(124, 58, 237, 0.25), transparent 45%),
-    radial-gradient(circle at 80% 0%, rgba(56, 189, 248, 0.2), transparent 40%),
-    radial-gradient(circle at 50% 120%, rgba(236, 72, 153, 0.2), transparent 40%),
-    linear-gradient(180deg, #0a0b16 0%, #0d1020 100%);
-}
+/* arcade-body removed */
 
-.arcade-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  background: repeating-linear-gradient(
-    180deg,
-    rgba(255, 255, 255, 0.04) 0px,
-    rgba(255, 255, 255, 0.04) 1px,
-    transparent 2px,
-    transparent 4px
-  );
-  pointer-events: none;
-  opacity: 0.35;
-  z-index: 0;
-}
+/* scanlines removed */
 
-.arcade-body::after {
-  content: "";
-  position: fixed;
-  inset: 0;
-  background: repeating-linear-gradient(
-    90deg,
-    rgba(124, 58, 237, 0.08) 0px,
-    rgba(124, 58, 237, 0.08) 1px,
-    transparent 2px,
-    transparent 24px
-  );
-  pointer-events: none;
-  opacity: 0.25;
-  z-index: 0;
-}
+/* grid removed */
 
 .arcade-title {
   font-family: var(--font-arcade);
@@ -159,53 +126,45 @@
 }
 
 .arcade-subtitle {
-  text-shadow: 0 0 10px rgba(56, 189, 248, 0.3);
+  text-shadow: 0 0 8px rgba(56, 189, 248, 0.2);
 }
 
 .arcade-btn {
-  font-family: var(--font-arcade);
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  border-width: 2px;
-  border-color: var(--primary);
-  background: linear-gradient(180deg, rgba(124, 58, 237, 0.35), rgba(17, 10, 34, 0.9));
-  box-shadow: 0 0 0 1px rgba(236, 72, 153, 0.5), 0 8px 20px rgba(59, 130, 246, 0.35);
+  border-width: 1px;
+  border-color: rgba(124, 58, 237, 0.6);
+  background: linear-gradient(180deg, rgba(124, 58, 237, 0.22), rgba(10, 10, 18, 0.9));
+  box-shadow: 0 0 0 1px rgba(124, 58, 237, 0.25), 0 8px 18px rgba(10, 10, 20, 0.45);
 }
 
 .arcade-btn:hover {
   transform: translateY(-1px);
-  box-shadow: 0 0 0 1px rgba(236, 72, 153, 0.75), 0 10px 26px rgba(59, 130, 246, 0.5);
+  box-shadow: 0 0 0 1px rgba(124, 58, 237, 0.5), 0 10px 22px rgba(10, 10, 20, 0.6);
 }
 
 .arcade-btn:active {
-  transform: translateY(1px);
-  box-shadow: 0 0 0 1px rgba(236, 72, 153, 0.35);
+  transform: translateY(0px);
 }
 
 [data-slot="card"] {
-  background: linear-gradient(135deg, rgba(20, 18, 48, 0.9), rgba(10, 8, 24, 0.95));
-  border-color: rgba(124, 58, 237, 0.6);
-  box-shadow: 0 0 0 1px rgba(56, 189, 248, 0.2), 0 16px 40px rgba(10, 10, 25, 0.6);
-}
-
-[data-slot="card"] h3 {
-  text-shadow: 0 0 12px rgba(124, 58, 237, 0.5);
+  background: rgba(14, 16, 28, 0.9);
+  border-color: rgba(124, 58, 237, 0.35);
+  box-shadow: 0 0 0 1px rgba(124, 58, 237, 0.12), 0 12px 24px rgba(5, 6, 15, 0.45);
 }
 
 [data-slot="badge"] {
-  border-color: rgba(56, 189, 248, 0.6);
-  background: rgba(15, 23, 42, 0.7);
+  border-color: rgba(56, 189, 248, 0.35);
+  background: rgba(12, 18, 32, 0.7);
   color: rgba(224, 231, 255, 0.9);
 }
 
 header {
-  border-color: rgba(124, 58, 237, 0.4);
-  background: rgba(8, 9, 18, 0.85);
-  box-shadow: 0 4px 24px rgba(5, 5, 15, 0.6);
+  border-color: rgba(124, 58, 237, 0.25);
+  background: rgba(8, 9, 18, 0.9);
+  box-shadow: 0 4px 18px rgba(5, 5, 12, 0.55);
 }
 
 footer {
-  border-color: rgba(124, 58, 237, 0.4);
+  border-color: rgba(124, 58, 237, 0.25);
 }
 
 @layer base {
@@ -220,7 +179,7 @@ footer {
 
   a {
     @apply text-primary;
-    text-shadow: 0 0 8px rgba(124, 58, 237, 0.4);
+    text-shadow: 0 0 6px rgba(124, 58, 237, 0.25);
   }
 
   a:hover {
@@ -229,30 +188,18 @@ footer {
   
   h1 {
     @apply scroll-m-20 text-4xl font-bold tracking-tight lg:text-5xl;
-    font-family: var(--font-arcade);
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
   }
   
   h2 {
     @apply scroll-m-20 pb-2 text-3xl font-semibold tracking-tight first:mt-0;
-    font-family: var(--font-arcade);
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
   }
   
   h3 {
     @apply scroll-m-20 text-2xl font-semibold tracking-tight;
-    font-family: var(--font-arcade);
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
   }
   
   h4 {
     @apply scroll-m-20 text-xl font-semibold tracking-tight;
-    font-family: var(--font-arcade);
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
   }
   
   p {
