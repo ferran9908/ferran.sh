@@ -13,12 +13,12 @@ export default async function HomePage() {
     <div className="space-y-16">
       {/* Hero Section */}
       <section className="py-12 md:py-20">
-        <div className="space-y-6">
+        <div className="space-y-6 rounded-2xl border border-primary/40 bg-black/30 px-8 py-10 shadow-[0_0_40px_rgba(124,58,237,0.25)]">
           <div className="space-y-4">
             <h1 className="text-4xl md:text-6xl font-bold tracking-tight">
               {siteConfig.author.name}, <span className="font-mono text-md ">{siteConfig.author.role}</span> at {siteConfig.author.company}
             </h1>
-            <p className="text-xl text-muted-foreground max-w-2xl">
+            <p className="text-xl text-muted-foreground max-w-2xl arcade-subtitle">
               {siteConfig.author.bio}
             </p>
           </div>
