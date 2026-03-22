@@ -7,71 +7,80 @@ export function Footer() {
 
   return (
     <footer className="mt-auto border-t">
-      <div className="mx-auto max-w-3xl px-6 py-12">
+      <div className="mx-auto max-w-3xl px-6 py-10">
+        {/* System readout line */}
+        <div
+          className="flex items-center gap-3 mb-6 text-[0.6rem] tracking-widest uppercase text-muted-foreground/40"
+          style={{ fontFamily: 'var(--font-geist-mono), monospace' }}
+        >
+          <span className="inline-block h-px flex-1 bg-border/40" />
+          <span>SYS_{currentYear}_EOF</span>
+          <span className="inline-block h-px flex-1 bg-border/40" />
+        </div>
+
         <div className="flex flex-col items-center justify-between gap-6 sm:flex-row">
-          <div className="flex flex-col items-center sm:items-start gap-2">
-            <p className="text-sm text-muted-foreground">
-              © {currentYear} {siteConfig.author.name}. All rights reserved.
+          {/* Left: copyright + links */}
+          <div className="flex flex-col items-center sm:items-start gap-3">
+            <p
+              className="text-xs text-muted-foreground/50 tracking-widest uppercase"
+              style={{ fontFamily: 'var(--font-geist-mono), monospace' }}
+            >
+              © {currentYear}{' '}
+              <span className="text-primary/70">{siteConfig.author.name}</span>
             </p>
-            <div className="flex items-center gap-1 text-xs text-muted-foreground">
+            <div
+              className="flex items-center gap-2 text-[0.65rem] text-muted-foreground/40 tracking-widest uppercase"
+              style={{ fontFamily: 'var(--font-geist-mono), monospace' }}
+            >
               <Link
                 href="/writing"
-                className="hover:text-foreground transition-colors"
+                className="hover:text-primary transition-colors"
               >
-                Writing
+                /writing
               </Link>
-              <span>·</span>
+              <span className="text-border">·</span>
               <Link
                 href="/about"
-                className="hover:text-foreground transition-colors"
+                className="hover:text-primary transition-colors"
               >
-                About
+                /about
               </Link>
-              <span>·</span>
+              <span className="text-border">·</span>
+              <Link
+                href="/now"
+                className="hover:text-primary transition-colors"
+              >
+                /now
+              </Link>
+              <span className="text-border">·</span>
               <Link
                 href="/api/rss.xml"
-                className="hover:text-foreground transition-colors"
+                className="hover:text-primary transition-colors"
               >
-                RSS
+                /rss
               </Link>
             </div>
           </div>
-          
-          <div className="flex items-center gap-4">
-            <Link
-              href={siteConfig.links.twitter}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-muted-foreground hover:text-foreground transition-colors"
-              aria-label="Twitter"
-            >
-              <Twitter className="h-4 w-4" />
-            </Link>
-            <Link
-              href={siteConfig.links.github}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-muted-foreground hover:text-foreground transition-colors"
-              aria-label="GitHub"
-            >
-              <Github className="h-4 w-4" />
-            </Link>
-            <Link
-              href={siteConfig.links.linkedin}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-muted-foreground hover:text-foreground transition-colors"
-              aria-label="LinkedIn"
-            >
-              <Linkedin className="h-4 w-4" />
-            </Link>
-            <Link
-              href="/api/rss.xml"
-              className="text-muted-foreground hover:text-foreground transition-colors"
-              aria-label="RSS Feed"
-            >
-              <Rss className="h-4 w-4" />
-            </Link>
+
+          {/* Right: social icons */}
+          <div className="flex items-center gap-3">
+            {[
+              { href: siteConfig.links.twitter,  Icon: Twitter,  label: 'Twitter' },
+              { href: siteConfig.links.github,   Icon: Github,   label: 'GitHub' },
+              { href: siteConfig.links.linkedin, Icon: Linkedin, label: 'LinkedIn' },
+              { href: '/api/rss.xml',             Icon: Rss,      label: 'RSS Feed' },
+            ].map(({ href, Icon, label }) => (
+              <Link
+                key={label}
+                href={href}
+                target={href.startsWith('http') ? '_blank' : undefined}
+                rel={href.startsWith('http') ? 'noopener noreferrer' : undefined}
+                aria-label={label}
+                className="group flex h-8 w-8 items-center justify-center border border-border/40 text-muted-foreground/40 transition-all hover:border-primary/50 hover:text-primary hover:shadow-[0_0_8px_oklch(0.82_0.18_190_/_0.3)]"
+              >
+                <Icon className="h-3.5 w-3.5" />
+              </Link>
+            ))}
           </div>
         </div>
       </div>
